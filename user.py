@@ -36,7 +36,7 @@ def change_password(login, admin_override=False, admin_site=None): # Changement 
         target_login = login
         print("Changement de votre mot de passe")
         while True: # boucle infinie
-            current_password = getpass.getpass("Entrez votre mot de passe actuel : ") # Input masqué du mdp
+            current_password = str(getpass.getpass("Entrez votre mot de passe actuel : ")) # Input masqué du mdp
             sql = "SELECT password FROM users WHERE login = %s" # Modèle de requête pour récupérer le mdp
             cursor.execute(sql, (target_login,)) # On exécute la requête pour récupérer le mdp dans la db
             stored_password = cursor.fetchone() # On stocke le mdp haséh dans une variable
@@ -47,7 +47,7 @@ def change_password(login, admin_override=False, admin_site=None): # Changement 
                 print("Mot de passe actuel incorrect.") # Retour au début de la boucle 
 
         while True:
-            new_password = getpass.getpass("Entrez un nouveau mot de passe : ") # On stocke dans une variable le nouveau mdp
+            new_password = str(getpass.getpass("Entrez un nouveau mot de passe : ")) # On stocke dans une variable le nouveau mdp
 
             if len(new_password) < 12: # Si la taille de la str est inférieure à 8
                 print("Mot de passe trop court. Minimum 12 caractères.") 
@@ -62,7 +62,7 @@ def change_password(login, admin_override=False, admin_site=None): # Changement 
                 print("Le mot de passe doit contenir au moins un caractère spécial.")
                 continue
 
-            confirm_password = getpass.getpass("Confirmez le nouveau mot de passe : ") # confirmation du mdp
+            confirm_password = str(getpass.getpass("Confirmez le nouveau mot de passe : ")) # confirmation du mdp
 
             if new_password == confirm_password: # Si les deux mdp correspondent
                 hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8') # On hash le nouveau mdp
@@ -80,7 +80,7 @@ def logon():
     conn = connect_db() # Connexion à la db
     cursor = conn.cursor() # Variable pour le curseur
 
-    login = input("Entrez votre identifiant : ") # Demande du login
+    login = str(input("Entrez votre identifiant : ")) # Demande du login
 
     sql = "SELECT id, name, surname, password, site, status, logon_count FROM users WHERE login = %s" # Modeèle de requête où l'on récupère toutes les infos d'un user
     cursor.execute(sql, (login,)) # Envoie de la requête
@@ -91,7 +91,7 @@ def logon():
 
         for tentative in range(3): # Pour 4 tentatives : 
         
-            entered_password = getpass.getpass("Entrez votre mot de passe : ") # On masque le mdp lorsqu'il est saisi
+            entered_password = str(getpass.getpass("Entrez votre mot de passe : ")) # On masque le mdp lorsqu'il est saisi
 
             if bcrypt.checkpw(entered_password.encode('utf-8'), password.encode('utf-8')): # Si le passord correspond
                 print(f"Connexion réussie. Bienvenue, {surname} !") # On confirme l'accès
