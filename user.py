@@ -80,7 +80,7 @@ def logon():
     conn = connect_db() # Connexion à la db
     cursor = conn.cursor() # Variable pour le curseur
 
-    login = input("Entrez votre identifiant : ") # Demande du login
+    login = str(input("Entrez votre identifiant : ")) # Demande du login
 
     sql = "SELECT id, name, surname, password, site, status, logon_count FROM users WHERE login = %s" # Modeèle de requête où l'on récupère toutes les infos d'un user
     cursor.execute(sql, (login,)) # Envoie de la requête
