@@ -111,7 +111,7 @@ def logon():
                 if tentative == 2:  # Si 3e tentative échouées
                     print("3 tentatives échouées, retour au menu") 
                     return                    
-    else: # Sinon 
+    else: # Sinon
         print("Utilisateur non trouvé.") 
         conn.close() # On ferme la db
         return
