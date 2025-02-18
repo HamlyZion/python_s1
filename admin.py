@@ -94,13 +94,23 @@ def modify_user(admin_site):
         if admin_site != "Paris" and user_site != admin_site:
             print("Vous ne pouvez modifier que les utilisateurs de votre site.")
         else:
-            new_site = input("Nouveau site (laisser vide pour ne pas changer) : ")
-            new_role = input("Nouveau rôle (admin/user, laisser vide pour ne pas changer) : ")
+            new_name = input("Nouveau nom (laisser vide pour ne pas changer) : ")
 
-            if new_site:
+            new_surname = input("Nouveau prénom (laisser vide pour ne pas changer) : ")
+
+            new_site = input("Nouveau site (laisser vide pour ne pas changer) : ")
+
+            if admin_site == "Paris":
+                new_role = input("Nouveau rôle (admin/user, laisser vide pour ne pas changer) : ")
+
+            if new_site != "":
                 cursor.execute("UPDATE users SET site = %s WHERE login = %s", (new_site, login))
             if new_role in ["admin", "user"]:
                 cursor.execute("UPDATE users SET status = %s WHERE login = %s", (new_role, login))
+            if new_name != "":
+                cursor.execute("UPDATE users SET name = %s WHERE login = %s", (new_name, login))
+            if new_surname != "":
+                cursor.execute("UPDATE users SET surname = %s WHERE login = %s", (new_surname, login))
 
             conn.commit()
             print("Modification réussie.")
