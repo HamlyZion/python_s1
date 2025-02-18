@@ -8,8 +8,13 @@ def createUser(admin_site):
     conn = connect_db()
     cursor = conn.cursor()
 
-    name = input("Nom de l'utilisateur ?\n").upper()
-    surname = input("Prenom de l'utilisateur ?\n").title()
+    while True:
+        name = str(input("Nom de l'utilisateur ?\n").upper())
+        surname = str(input("Prenom de l'utilisateur ?\n").title())
+        if surname != "" and name != "":
+            break
+        else:
+            print("Le nom et le prénom ne peuvent pas être vides")
     
     if admin_site == "Paris":
         while (site := input("Où va travailler l'utilisateur ?\n Paris\n Nantes\n Strasbourg\n Bordeaux\n Tours\n").strip()) not in sites:
