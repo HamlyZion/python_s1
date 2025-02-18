@@ -8,7 +8,7 @@ def generatePassword(): # Génération mdp
     characters = string.ascii_uppercase.replace("O", "").replace("I", "") + \
                  string.ascii_lowercase.replace("l", "") + \
                  string.digits.replace("0", "") + \
-                 string.punctuation # exclusion de O I 1 et 0 
+                 string.punctuation # exclusion de O I l et 0 
     
     plain_password = ''.join(random.choice(characters) for _ in range(length)) # Création du mdp aléatoire en suivant la longueur saisie et les caractères exclus
     hashed_password = bcrypt.hashpw(plain_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8') # hashage du mdp
